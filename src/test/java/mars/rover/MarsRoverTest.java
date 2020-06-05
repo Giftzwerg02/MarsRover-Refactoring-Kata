@@ -20,4 +20,20 @@ class MarsRoverTest {
         assertEquals("5 1 E", newPosition);
     }
 
+    // region Toni-Tests
+
+    // endregion
+
+    // region Paul-Tests
+
+    // endregion
+
+    // region Patrick-Tests
+
+    // endregion
+
+    // region Benjamin-Tests
+
+    // endregion
+
 }
