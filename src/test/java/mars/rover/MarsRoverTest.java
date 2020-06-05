@@ -19,9 +19,5 @@ class MarsRoverTest {
         String newPosition = MarsRover.move(3, 3, 'E', "MMRMMRMRRM");
         assertEquals("5 1 E", newPosition);
     }
-    @Test
-    public void probepush(){
-
-    }
 
 }
