@@ -3,6 +3,7 @@ package mars.rover;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class MarsRoverTest {
 
@@ -33,7 +34,12 @@ class MarsRoverTest {
     // endregion
 
     // region Benjamin-Tests
-
+    @Test
+    public void generateMultipleRoversTest() {
+        MarsRover mr1 = new MarsRover();
+        MarsRover mr2 = new MarsRover();
+        assertNotEquals(mr1, mr2);
+    }
     // endregion
 
 }
