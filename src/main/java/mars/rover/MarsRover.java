@@ -1,7 +1,7 @@
 package mars.rover;
 
 public class MarsRover {
-    //Testkommentar da IntelliJ spinnt
+
     public static String move(int x, int y, char direction, String instructions) {
         if (!instructions.isEmpty()) {
             char instruction = instructions.charAt(0);
