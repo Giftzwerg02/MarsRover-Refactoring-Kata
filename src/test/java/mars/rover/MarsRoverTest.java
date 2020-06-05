@@ -40,6 +40,13 @@ class MarsRoverTest {
         MarsRover mr2 = new MarsRover();
         assertNotEquals(mr1, mr2);
     }
+
+    @Test
+    public void startRoverTest() {
+        String newPosition = "";
+        newPosition = MarsRover.move(1,2, 'N', "5 5");
+        assertEquals("1 2 N", newPosition);
+    }
     // endregion
 
 }
