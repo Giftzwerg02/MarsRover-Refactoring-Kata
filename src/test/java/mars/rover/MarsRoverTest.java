@@ -2,8 +2,15 @@ package mars.rover;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MarsRoverTest {
 
@@ -69,6 +76,14 @@ class MarsRoverTest {
     public void driveWestTest() {
         String northPos = MarsRover.move(1,1, 'W', "M");
         assertEquals(northPos, "0 1 W");
+    }
+
+    @Test
+    public void positionOutputStyleTest() {
+        Pattern outputPattern = Pattern.compile("\\d \\d [NESW]");
+        String roverPosition = MarsRover.move(1, 2, 'N', "LMLMLMLMM");
+        Matcher positionMatcher = outputPattern.matcher(roverPosition);
+        assertTrue(positionMatcher.matches());
     }
 
     // endregion
