@@ -55,6 +55,12 @@ class MarsRoverTest {
          * */
         String roverPos1 = MarsRover.move(0, 0, 'N', "L");
         assertEquals(roverPos1, "0 0 W");
+        String roverPos2 = MarsRover.move(0, 0, 'W', "L");
+        assertEquals(roverPos2, "0 0 S");
+        String roverPos3 = MarsRover.move(0, 0, 'S', "L");
+        assertEquals(roverPos3, "0 0 E");
+        String roverPos4 = MarsRover.move(0, 0, 'E', "L");
+        assertEquals(roverPos4, "0 0 N");
     }
     //fährt der rover die richtige weite
     @Test
