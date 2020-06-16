@@ -7,18 +7,34 @@ import java.util.function.Function;
 
 public class MarsRover {
 
-    public static String move(Point pos, Direction direction, Instruction... instructions) {
+    private final Point pos;
+    private final Point drivingRange;
+    private Direction direction;
+
+    public MarsRover(int posX, int posY, int rangeX, int rangeY, Direction direction) {
+        this.direction = direction;
+        this.pos = new Point(posX, posY);
+        this.drivingRange = new Point(rangeX, rangeY);
+    }
+
+    public MarsRover(Point pos, Point range, Direction direction) {
+        this.pos = pos;
+        this.drivingRange = range;
+        this.direction = direction;
+    }
+
+    public String move(Instruction... instructions) {
 
         LinkedList<Instruction> instructionList = new LinkedList<>(Arrays.asList(instructions));
 
-        if(instructionList.isEmpty()) return String.format("%d %d %s", pos.x, pos.y, direction);
+        if(instructionList.isEmpty()) return String.format("%d %d %s", this.pos.x, this.pos.y, direction);
 
         Instruction instruction = instructionList.pop();
-        Direction nextDirection = instruction.getNextDirection(direction);
+        this.direction = instruction.getNextDirection(direction);
 
-        if(instruction.isMove()) pos.translate(direction.getVectorValue().x, direction.getVectorValue().y);
+        if(instruction.isMove()) this.pos.translate(direction.getVectorValue().x, direction.getVectorValue().y);
 
-        return move(pos, nextDirection, instructionList.toArray(new Instruction[]{}));
+        return move(instructionList.toArray(new Instruction[]{}));
 
     }
 
