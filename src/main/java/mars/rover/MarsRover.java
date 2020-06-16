@@ -6,8 +6,8 @@ public class MarsRover {
 
     public static String move(int x, int y, char direction, String instructions) {
         if (!instructions.isEmpty()) {
-            char instruction = instructions.charAt(0);
-            if (instruction == 'L') {
+            Instruction instruction = Instruction.toInstruction(instructions.charAt(0));
+            if (instruction.equals(Instruction.L)) {
                 if (direction == 'N') {
                     return move(x, y, 'W', instructions.substring(1));
                 } else if (direction == 'W') {
@@ -17,7 +17,7 @@ public class MarsRover {
                 } else if (direction == 'E') {
                     return move(x, y, 'N', instructions.substring(1));
                 }
-            } else if (instruction == 'R') {
+            } else if (instruction.equals(Instruction.R)) {
                 if (direction == 'N') {
                     return move(x, y, 'E', instructions.substring(1));
                 } else if (direction == 'W') {
@@ -27,7 +27,7 @@ public class MarsRover {
                 } else if (direction == 'E') {
                     return move(x, y, 'S', instructions.substring(1));
                 }
-            } else if (instruction == 'M') {
+            } else if (instruction.equals(Instruction.M)) {
                 if (direction == 'N') {
                     return move(x, y + 1, 'N', instructions.substring(1));
                 } else if (direction == 'S') {
@@ -67,7 +67,7 @@ enum Instruction {
     L,
     R;
 
-    public Instruction toInstruction(char value) {
+    public static Instruction toInstruction(char value) {
         try {
             return Instruction.valueOf(value + "");
         } catch (IllegalArgumentException e) {
@@ -76,6 +76,7 @@ enum Instruction {
                             Arrays.toString(Instruction.values()))
             );
             System.exit(-1);
+            return null;
         }
     }
 
