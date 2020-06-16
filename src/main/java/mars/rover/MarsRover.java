@@ -1,12 +1,13 @@
 package mars.rover;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.function.Function;
 
 public class MarsRover {
 
-    public static String move(int x, int y, Direction direction, Instruction... instructions) {
+    public static String move(Point pos, Direction direction, Instruction... instructions) {
 
         LinkedList<Instruction> instructionList = new LinkedList<>(Arrays.asList(instructions));
 
@@ -15,17 +16,13 @@ public class MarsRover {
             Direction nextDirection = instruction.getNextDirection(direction);
 
             if(instruction.isMove()) {
-                if(nextDirection.isHorizontal()) {
-                    x += direction.getNumericalValue();
-                } else {
-                    y += direction.getNumericalValue();
-                }
+                pos.translate(direction.getVectorValue().x, direction.getVectorValue().y);
             }
 
-            return move(x, y, nextDirection, instructionList.toArray(new Instruction[]{}));
+            return move(pos, nextDirection, instructionList.toArray(new Instruction[]{}));
         }
 
-        return String.format("%d %d %s", x, y, direction);
+        return String.format("%d %d %s", pos.x, pos.y, direction);
 
     }
 
@@ -33,21 +30,19 @@ public class MarsRover {
 
 enum Direction {
 
-    N(1, 'W', 'E', false),
-    E(1, 'N', 'S', true),
-    S(-1, 'E', 'W', false),
-    W(-1, 'S', 'N', true);
+    N(new Point(0,1), 'W', 'E'),
+    E(new Point(1,0), 'N', 'S'),
+    S(new Point(0,-1), 'E', 'W'),
+    W(new Point(-1, 0), 'S', 'N');
 
-    final private int numericalValue;
+    final private Point vectorValue;
     final private char left;
     final private char right;
-    final private boolean horizontal;
 
-    Direction(int numericalValue, char left, char right, boolean horizontal) {
-        this.numericalValue = numericalValue;
+    Direction(Point vectorValue, char left, char right) {
+        this.vectorValue = vectorValue;
         this.left = left;
         this.right = right;
-        this.horizontal = horizontal;
     }
 
     // region Getters
@@ -60,12 +55,8 @@ enum Direction {
         return right;
     }
 
-    public boolean isHorizontal() {
-        return horizontal;
-    }
-
-    public int getNumericalValue() {
-        return numericalValue;
+    public Point getVectorValue() {
+        return vectorValue;
     }
 
     // endregion

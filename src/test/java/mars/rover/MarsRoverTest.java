@@ -32,43 +32,130 @@ class MarsRoverTest {
 
     // region Paul-Tests
 
+    @Test
+    public void north_border() {
+        MarsRover test = new MarsRover(5, 5);
+        String pos = MarsRover.move(3, 3, N, M, M, M);
+        assertEquals("3 5 N", pos);
+    }
+
+    @Test
+    public void east_border() {
+        MarsRover test = new MarsRover(5, 5);
+        String pos = MarsRover.move(3, 3, E, M, M, M);
+        assertEquals("5 3 E", pos);
+    }
+
+    @Test
+    public void south_border() {
+        MarsRover test = new MarsRover(5, 5);
+        String pos = MarsRover.move(3, 3, S, M, M, M);
+        assertEquals("3 0 S", pos);
+    }
+
+    @Test
+    public void west_border() {
+        MarsRover test = new MarsRover(5, 5);
+        String pos = MarsRover.move(3, 3, W, M, M, M);
+        assertEquals("0 3  W", pos);
+    }
+
+    @Test
+    public void drive_right() {
+        MarsRover test = new MarsRover(8, 8);
+        String pos = MarsRover.move(2, 2, N, R, M);
+        assertEquals("3 2 E", pos);
+    }
+
+    @Test
+    public void drive_right2() {
+        MarsRover test = new MarsRover(8, 8);
+        String pos = MarsRover.move(2, 2, N, R, R, M);
+        assertEquals("2 1 S", pos);
+    }
+
+    @Test
+    public void drive_right3() {
+        MarsRover test = new MarsRover(8, 8);
+        String pos = MarsRover.move(2, 2, N, R, R, R, M);
+        assertEquals("1 2 W", pos);
+    }
+
+    @Test
+    public void drive_right4() {
+        MarsRover test = new MarsRover(8, 8);
+        String pos = MarsRover.move(2, 2, N, R, R, R, R, M);
+        assertEquals("2 3 N", pos);
+    }
+
+    @Test
+    public void direction_North() {
+        MarsRover test = new MarsRover(10, 10);
+        String pos = MarsRover.move(2, 2, N, R, R, R, L, L, L, L);
+        assertEquals("2 2 N", pos);
+
+    }
+
+    @Test
+    public void directions_East() {
+        MarsRover test = new MarsRover(10, 10);
+        String pos = MarsRover.move(2, 2, N, R, R, L);
+        assertEquals("2 2 E", pos);
+
+    }
+
+    @Test
+    public void directions_South() {
+        MarsRover test = new MarsRover(10, 10);
+        String pos = MarsRover.move(2, 2, N, L, L, R, R, R, R);
+        assertEquals("2 2 S", pos);
+
+    }
+
+    @Test
+    public void directions_West() {
+        MarsRover test = new MarsRover(10, 10);
+        String pos = MarsRover.move(2, 2, N, L, R, R, L, L);
+        assertEquals("2 2 W", pos);
+
+    }
+
     // endregion
 
     // region Patrick-Tests
-    //fährt der rover in die richtige richtung
     @Test
     public void driveDirection() {
         /*
          * If the rover is given the command 'MarsRover.move(3,2, 'E', "M");' it
          * should end up on "4 2 E"
          * */
-        String roverPos = MarsRover.move(3,2, 'E', "M");
+        String roverPos = MarsRover.move(3,2, E, M);
         assertEquals(roverPos, "4 2 E");
     }
-    //kann sich der rover nach links drehen
+
     @Test
     public void turnLeft() {
         /*
          * If the rover is given the command 'MarsRover.move(0, 0, 'N', "L");' it should turn to the left (West)
          * */
-        String roverPos1 = MarsRover.move(0, 0, 'N', "L");
+        String roverPos1 = MarsRover.move(0, 0, N, L);
         assertEquals(roverPos1, "0 0 W");
-        String roverPos2 = MarsRover.move(0, 0, 'W', "L");
+        String roverPos2 = MarsRover.move(0, 0, W, L);
         assertEquals(roverPos2, "0 0 S");
-        String roverPos3 = MarsRover.move(0, 0, 'S', "L");
+        String roverPos3 = MarsRover.move(0, 0, S, L);
         assertEquals(roverPos3, "0 0 E");
-        String roverPos4 = MarsRover.move(0, 0, 'E', "L");
+        String roverPos4 = MarsRover.move(0, 0, E, L);
         assertEquals(roverPos4, "0 0 N");
     }
-    //fährt der rover die richtige weite
+
     @Test
     public void driveWidth() {
         /*
-         * if the rover is given the command MarsRover.move(0, 0, 'E', "MMMM"); it should move 4 squares to the east
+         * If the rover is given the command MarsRover.move(0, 0, 'E', "MMMM"); it should move 4 squares to the east
          * and thus end up on '4 0 E'
          * */
 
-        String roverPos1 = MarsRover.move(0, 0, 'E', "MMMM");
+        String roverPos1 = MarsRover.move(0, 0, E, M, M, M, M);
         assertEquals(roverPos1, "4 0 E");
     }
 
