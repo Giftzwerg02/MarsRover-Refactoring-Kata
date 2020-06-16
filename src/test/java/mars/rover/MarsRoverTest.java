@@ -94,9 +94,8 @@ class MarsRoverTest {
     @Test
     public void direction_North() {
         MarsRover test = new MarsRover(2,2,10, 10, N);
-        String pos = test.move(R, R, R, L, L, L, L);
+        String pos = test.move(R, R, R, L, L, L);
         assertEquals("2 2 N", pos);
-
     }
 
     @Test

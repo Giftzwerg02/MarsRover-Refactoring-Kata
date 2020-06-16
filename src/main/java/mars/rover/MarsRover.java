@@ -25,17 +25,48 @@ public class MarsRover {
 
     public String move(Instruction... instructions) {
 
-        LinkedList<Instruction> instructionList = new LinkedList<>(Arrays.asList(instructions));
+        for(Instruction instruction : instructions) {
 
-        if(instructionList.isEmpty()) return String.format("%d %d %s", this.pos.x, this.pos.y, direction);
+            this.direction = instruction.getNextDirection(direction);
 
-        Instruction instruction = instructionList.pop();
-        this.direction = instruction.getNextDirection(direction);
+            if(instruction.isMove()) this.pos.translate(direction.getVectorValue().x, direction.getVectorValue().y);
 
-        if(instruction.isMove()) this.pos.translate(direction.getVectorValue().x, direction.getVectorValue().y);
+            this.revertPositionOnBorderHit();
 
-        return move(instructionList.toArray(new Instruction[]{}));
+        }
 
+        return String.format("%d %d %s", this.pos.x, this.pos.y, this.direction);
+
+    }
+
+    private void revertPositionOnBorderHit() {
+
+        if(this.pos.x > this.drivingRange.x) {
+
+            hitMessage(this.drivingRange.x, this.pos.y);
+            this.pos.setLocation(this.drivingRange.x, this.pos.y);
+
+        } else if(this.pos.x < 0) {
+
+            hitMessage(0, this.pos.y);
+            this.pos.setLocation(0, this.pos.y);
+
+        } else if(this.pos.y > this.drivingRange.y) {
+
+            hitMessage(this.pos.x, this.drivingRange.y);
+            this.pos.setLocation(this.pos.x, this.drivingRange.y);
+
+        } else if(this.pos.y < 0) {
+
+            hitMessage(this.pos.x, 0);
+            this.pos.setLocation(this.pos.x, 0);
+
+        }
+
+    }
+
+    private void hitMessage(int x, int y) {
+        System.out.println(String.format("Cannot drive! Wall at: (%d %d)", x, y));
     }
 
 }
