@@ -2,7 +2,6 @@ package mars.rover;
 
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

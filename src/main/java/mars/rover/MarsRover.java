@@ -1,8 +1,6 @@
 package mars.rover;
 
 import java.awt.*;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.function.Function;
 
 public class MarsRover {
