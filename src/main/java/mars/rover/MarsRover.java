@@ -1,93 +1,94 @@
 package mars.rover;
 
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.function.Function;
 
 public class MarsRover {
 
-    public static String move(int x, int y, char direction, String instructions) {
-        if (!instructions.isEmpty()) {
-            Instruction instruction = Instruction.toInstruction(instructions.charAt(0));
-            if (instruction.equals(Instruction.L)) {
-                if (direction == 'N') {
-                    return move(x, y, 'W', instructions.substring(1));
-                } else if (direction == 'W') {
-                    return move(x, y, 'S', instructions.substring(1));
-                } else if (direction == 'S') {
-                    return move(x, y, 'E', instructions.substring(1));
-                } else if (direction == 'E') {
-                    return move(x, y, 'N', instructions.substring(1));
-                }
-            } else if (instruction.equals(Instruction.R)) {
-                if (direction == 'N') {
-                    return move(x, y, 'E', instructions.substring(1));
-                } else if (direction == 'W') {
-                    return move(x, y, 'N', instructions.substring(1));
-                } else if (direction == 'S') {
-                    return move(x, y, 'W', instructions.substring(1));
-                } else if (direction == 'E') {
-                    return move(x, y, 'S', instructions.substring(1));
-                }
-            } else if (instruction.equals(Instruction.M)) {
-                if (direction == 'N') {
-                    return move(x, y + 1, 'N', instructions.substring(1));
-                } else if (direction == 'S') {
-                    return move(x, y - 1, 'S', instructions.substring(1));
-                } else if (direction == 'W') {
-                    return move(x - 1, y, 'W', instructions.substring(1));
-                } else if (direction == 'E') {
-                    return move(x + 1, y, 'E', instructions.substring(1));
+    public static String move(int x, int y, Direction direction, Instruction... instructions) {
+
+        LinkedList<Instruction> instructionList = new LinkedList<>(Arrays.asList(instructions));
+
+        if (!instructionList.isEmpty()) {
+            Instruction instruction = instructionList.pop();
+            Direction nextDirection = instruction.getNextDirection(direction);
+
+            if(instruction.isMove()) {
+                if(nextDirection.isHorizontal()) {
+                    x += direction.getNumericalValue();
+                } else {
+                    y += direction.getNumericalValue();
                 }
             }
+
+            return move(x, y, nextDirection, instructionList.toArray(new Instruction[]{}));
         }
+
         return String.format("%d %d %s", x, y, direction);
+
     }
+
 }
 
 enum Direction {
 
-    NORTH('N', 'W', 'E'),
-    EAST('E', 'N', 'S'),
-    SOUTH('S', 'E', 'W'),
-    WEST('W', 'S', 'N');
+    N(1, 'W', 'E', false),
+    E(1, 'N', 'S', true),
+    S(-1, 'E', 'W', false),
+    W(-1, 'S', 'N', true);
 
-    public char value;
-    public char left;
-    public char right;
+    final private int numericalValue;
+    final private char left;
+    final private char right;
+    final private boolean horizontal;
 
-    Direction(char value, char left, char right) {
-        this.value = value;
+    Direction(int numericalValue, char left, char right, boolean horizontal) {
+        this.numericalValue = numericalValue;
         this.left = left;
         this.right = right;
+        this.horizontal = horizontal;
     }
 
-    public Direction changeDirection(Instruction instruction) {
-        char directionValue;
-        switch (instruction) {
-            case L: directionValue = this.left; break;
-            case R: directionValue = this.right; break;
-            default: directionValue = this.value; break;
-        }
-        return Direction.valueOf(directionValue + "");
+    // region Getters
+
+    public char getLeft() {
+        return left;
     }
+
+    public char getRight() {
+        return right;
+    }
+
+    public boolean isHorizontal() {
+        return horizontal;
+    }
+
+    public int getNumericalValue() {
+        return numericalValue;
+    }
+
+    // endregion
 
 }
 
 enum Instruction {
-    M,
-    L,
-    R;
 
-    public static Instruction toInstruction(char value) {
-        try {
-            return Instruction.valueOf(value + "");
-        } catch (IllegalArgumentException e) {
-            System.err.println(
-                    String.format("Invalid instruction: %s\nValid instructions are: %s\nStopping rover...", value,
-                            Arrays.toString(Instruction.values()))
-            );
-            System.exit(-1);
-            return null;
-        }
+    M(direction -> direction),
+    L(direction -> Direction.valueOf(direction.getLeft() + "")),
+    R(direction -> Direction.valueOf(direction.getRight() + ""));
+
+    final Function<Direction, Direction> changeDirection;
+
+    Instruction (Function<Direction, Direction> changeDirection) {
+        this.changeDirection = changeDirection;
     }
 
+    public Direction getNextDirection(Direction direction) {
+        return this.changeDirection.apply(direction);
+    }
+
+    public boolean isMove() {
+        return this.equals(M);
+    }
 }
