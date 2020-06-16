@@ -60,6 +60,16 @@ enum Direction {
         this.right = right;
     }
 
+    public Direction changeDirection(Instruction instruction) {
+        char directionValue;
+        switch (instruction) {
+            case L: directionValue = this.left; break;
+            case R: directionValue = this.right; break;
+            default: directionValue = this.value; break;
+        }
+        return Direction.valueOf(directionValue + "");
+    }
+
 }
 
 enum Instruction {
