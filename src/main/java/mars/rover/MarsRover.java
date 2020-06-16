@@ -40,3 +40,17 @@ public class MarsRover {
         return String.format("%d %d %s", x, y, direction);
     }
 }
+
+enum Direction {
+
+    NORTH('N'),
+    EAST('E'),
+    SOUTH('S'),
+    WEST('W');
+
+    public char value;
+    Direction(char value) {
+        this.value = value;
+    }
+
+}
