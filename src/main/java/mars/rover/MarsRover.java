@@ -1,5 +1,7 @@
 package mars.rover;
 
+import java.util.Arrays;
+
 public class MarsRover {
 
     public static String move(int x, int y, char direction, String instructions) {
@@ -51,10 +53,30 @@ enum Direction {
     public char value;
     public char left;
     public char right;
+
     Direction(char value, char left, char right) {
         this.value = value;
         this.left = left;
         this.right = right;
+    }
+
+}
+
+enum Instruction {
+    M,
+    L,
+    R;
+
+    public Instruction toInstruction(char value) {
+        try {
+            return Instruction.valueOf(value + "");
+        } catch (IllegalArgumentException e) {
+            System.err.println(
+                    String.format("Invalid instruction: %s\nValid instructions are: %s\nStopping rover...", value,
+                            Arrays.toString(Instruction.values()))
+            );
+            System.exit(-1);
+        }
     }
 
 }
