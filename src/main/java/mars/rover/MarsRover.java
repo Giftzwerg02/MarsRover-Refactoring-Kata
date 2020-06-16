@@ -43,15 +43,15 @@ public class MarsRover {
 
 enum Direction {
 
-    NORTH('N', Direction.WEST, Direction.EAST),
-    EAST('E', Direction.NORTH, Direction.SOUTH),
-    SOUTH('S', Direction.EAST, Direction.WEST),
-    WEST('W', Direction.SOUTH, Direction.NORTH);
+    NORTH('N', 'W', 'E'),
+    EAST('E', 'N', 'S'),
+    SOUTH('S', 'E', 'W'),
+    WEST('W', 'S', 'N');
 
     public char value;
-    public Direction left;
-    public Direction right;
-    Direction(char value, Direction left, Direction right) {
+    public char left;
+    public char right;
+    Direction(char value, char left, char right) {
         this.value = value;
         this.left = left;
         this.right = right;
