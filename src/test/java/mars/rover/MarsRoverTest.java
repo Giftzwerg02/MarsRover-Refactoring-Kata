@@ -37,6 +37,36 @@ class MarsRoverTest {
     // endregion
 
     // region Patrick-Tests
+    //fährt der rover in die richtige richtung
+    @Test
+    public void driveDirection() {
+        /*
+         * If the rover is given the command 'MarsRover.move(3,2, 'E', "M");' it
+         * should end up on "4 2 E"
+         * */
+        String roverPos = MarsRover.move(3,2, 'E', "M");
+        assertEquals(roverPos, "4 2 E");
+    }
+    //kann sich der rover nach links drehen
+    @Test
+    public void turnLeft() {
+        /*
+         * If the rover is given the command 'MarsRover.move(0, 0, 'N', "L");' it should turn to the left (West)
+         * */
+        String roverPos1 = MarsRover.move(0, 0, 'N', "L");
+        assertEquals(roverPos1, "0 0 W");
+    }
+    //fährt der rover die richtige weite
+    @Test
+    public void driveWidth() {
+        /*
+         * if the rover is given the command MarsRover.move(0, 0, 'E', "MMMM"); it should move 4 squares to the east
+         * and thus end up on '4 0 E'
+         * */
+
+        String roverPos1 = MarsRover.move(0, 0, 'E', "MMMM");
+        assertEquals(roverPos1, "4 0 E");
+    }
 
     // endregion
 
