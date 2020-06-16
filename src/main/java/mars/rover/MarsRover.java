@@ -11,18 +11,14 @@ public class MarsRover {
 
         LinkedList<Instruction> instructionList = new LinkedList<>(Arrays.asList(instructions));
 
-        if (!instructionList.isEmpty()) {
-            Instruction instruction = instructionList.pop();
-            Direction nextDirection = instruction.getNextDirection(direction);
+        if(instructionList.isEmpty()) return String.format("%d %d %s", pos.x, pos.y, direction);
 
-            if(instruction.isMove()) {
-                pos.translate(direction.getVectorValue().x, direction.getVectorValue().y);
-            }
+        Instruction instruction = instructionList.pop();
+        Direction nextDirection = instruction.getNextDirection(direction);
 
-            return move(pos, nextDirection, instructionList.toArray(new Instruction[]{}));
-        }
+        if(instruction.isMove()) pos.translate(direction.getVectorValue().x, direction.getVectorValue().y);
 
-        return String.format("%d %d %s", pos.x, pos.y, direction);
+        return move(pos, nextDirection, instructionList.toArray(new Instruction[]{}));
 
     }
 

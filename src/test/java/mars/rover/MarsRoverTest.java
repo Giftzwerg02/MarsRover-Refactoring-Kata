@@ -2,6 +2,7 @@ package mars.rover;
 
 import org.junit.jupiter.api.Test;
 
+import java.awt.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,14 +16,14 @@ class MarsRoverTest {
     @Test
     public void
     acceptance_test_1() {
-        String newPosition = MarsRover.move(1, 2, N, L, M, L, M, L, M, L, M, M);
+        String newPosition = MarsRover.move(new Point(1, 2), N, L, M, L, M, L, M, L, M, M);
         assertEquals("1 3 N", newPosition);
     }
 
     @Test
     public void
     acceptance_test_2() {
-        String newPosition = MarsRover.move(3, 3, E, M, M, R, M, M, R, M, R, R, M);
+        String newPosition = MarsRover.move(new Point(3, 3), E, M, M, R, M, M, R, M, R, R, M);
         assertEquals("5 1 E", newPosition);
     }
 
@@ -129,7 +130,7 @@ class MarsRoverTest {
          * If the rover is given the command 'MarsRover.move(3,2, 'E', "M");' it
          * should end up on "4 2 E"
          * */
-        String roverPos = MarsRover.move(3,2, E, M);
+        String roverPos = MarsRover.move(new Point(3,2), E, M);
         assertEquals(roverPos, "4 2 E");
     }
 
@@ -138,13 +139,13 @@ class MarsRoverTest {
         /*
          * If the rover is given the command 'MarsRover.move(0, 0, 'N', "L");' it should turn to the left (West)
          * */
-        String roverPos1 = MarsRover.move(0, 0, N, L);
+        String roverPos1 = MarsRover.move(new Point(0, 0), N, L);
         assertEquals(roverPos1, "0 0 W");
-        String roverPos2 = MarsRover.move(0, 0, W, L);
+        String roverPos2 = MarsRover.move(new Point(0, 0), W, L);
         assertEquals(roverPos2, "0 0 S");
-        String roverPos3 = MarsRover.move(0, 0, S, L);
+        String roverPos3 = MarsRover.move(new Point(0, 0), S, L);
         assertEquals(roverPos3, "0 0 E");
-        String roverPos4 = MarsRover.move(0, 0, E, L);
+        String roverPos4 = MarsRover.move(new Point(0, 0), E, L);
         assertEquals(roverPos4, "0 0 N");
     }
 
@@ -155,7 +156,7 @@ class MarsRoverTest {
          * and thus end up on '4 0 E'
          * */
 
-        String roverPos1 = MarsRover.move(0, 0, E, M, M, M, M);
+        String roverPos1 = MarsRover.move(new Point(0, 0), E, M, M, M, M);
         assertEquals(roverPos1, "4 0 E");
     }
 
@@ -170,39 +171,39 @@ class MarsRoverTest {
         * as well
         * */
 
-        String roverPos1 = MarsRover.move(1, 2, N, L, M, L, M, L, M, M);
-        String roverPos2 = MarsRover.move(1, 2, N, L, M, L, M, L, M, M);
+        String roverPos1 = MarsRover.move(new Point(1, 2), N, L, M, L, M, L, M, M);
+        String roverPos2 = MarsRover.move(new Point(1, 2), N, L, M, L, M, L, M, M);
         assertEquals(roverPos1, roverPos2);
     }
 
     @Test
     public void driveNorthTest() {
-        String northPos = MarsRover.move(1,1, N, M);
+        String northPos = MarsRover.move(new Point(1,1), N, M);
         assertEquals(northPos, "1 2 N");
     }
 
     @Test
     public void driveEastTest() {
-        String northPos = MarsRover.move(1,1, E, M);
+        String northPos = MarsRover.move(new Point(1,1), E, M);
         assertEquals(northPos, "2 1 E");
     }
 
     @Test
     public void driveSouthTest() {
-        String northPos = MarsRover.move(1,1, S, M);
+        String northPos = MarsRover.move(new Point(1,1), S, M);
         assertEquals(northPos, "1 0 S");
     }
 
     @Test
     public void driveWestTest() {
-        String northPos = MarsRover.move(1,1, W, M);
+        String northPos = MarsRover.move(new Point(1,1), W, M);
         assertEquals(northPos, "0 1 W");
     }
 
     @Test
     public void positionOutputStyleTest() {
         Pattern outputPattern = Pattern.compile("\\d \\d [NESW]");
-        String roverPosition = MarsRover.move(1, 2, N, L, M, L, M, L, M, L, M, M);
+        String roverPosition = MarsRover.move(new Point(1, 2), N, L, M, L, M, L, M, L, M, M);
         Matcher positionMatcher = outputPattern.matcher(roverPosition);
         assertTrue(positionMatcher.matches());
     }
