@@ -37,6 +37,6 @@ public class MarsRover {
                 }
             }
         }
-        return x + " " + y + " " + direction;
+        return String.format("%d %d %s", x, y, direction);
     }
 }
