@@ -29,7 +29,30 @@ class MarsRoverTest {
     }
 
     // region Toni-Tests
+    @Test
+    public void roverCreateTest() {
+        String move = new MarsRover(2, 2, 10, 10, N).move(M, M);
+        assertEquals("2 4 N", move);
+    }
 
+    @Test
+    public void createFieldTest() {
+        MarsRover rover = new MarsRover(0, 0, 10, 10, E);
+        for (int j = 0; j < 10; j++) {
+            for (int i = 0; i < 10; i++) {
+                rover.move(M);
+            }
+            if (j%2 == 0) {
+                rover.move(L, M, L);
+            } else {
+                rover.move(R, M, R);
+            }
+        }
+        for (int i = 0; i < 9; i++) {
+            rover.move(M);
+        }
+        assertEquals("10 10 E", rover.move(M));
+    }
     // endregion
 
     // region Paul-Tests
@@ -227,28 +250,4 @@ class MarsRoverTest {
 
     // endregion
 
-    @Test
-    public void roverCreateTest() {
-        String move = new MarsRover(2, 2, 10, 10, N).move(M, M);
-        assertEquals("2 4 N", move);
-    }
-
-    @Test
-    public void createFieldTest() {
-        MarsRover rover = new MarsRover(0, 0, 10, 10, E);
-        for (int j = 0; j < 10; j++) {
-            for (int i = 0; i < 10; i++) {
-                rover.move(M);
-            }
-            if (j%2 == 0) {
-                rover.move(L, M, L);
-            } else {
-                rover.move(R, M, R);
-            }
-        }
-        for (int i = 0; i < 9; i++) {
-            rover.move(M);
-        }
-        assertEquals("10 10 E", rover.move(M));
-    }
 }
